@@ -1,4 +1,6 @@
 from django.db import models
+
+
 class Quote(models.Model):
     text = models.TextField(unique=True)
     source = models.CharField(max_length=255)
@@ -7,5 +9,6 @@ class Quote(models.Model):
     likes = models.IntegerField(default=0)
     dislikes = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
+
     def __str__(self):
         return f"{self.text[:50]} ({self.source})"

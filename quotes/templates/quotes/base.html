@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Quotes App{% endblock %}</title>
+    <style>
+        nav a {
+            margin-right: 15px;
+            text-decoration: none;
+            color: darkblue;
+            font-weight: bold;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="{% url 'home' %}">🏠 Главная</a>
+        <a href="{% url 'add_quote' %}">➕ Добавить цитату</a>
+        <a href="{% url 'top_quotes' %}">📚 Топ 10 цитат</a>
+    </nav>
+    <hr>
+    {% block content %}
+    {% endblock %}
+</body>
+</html>

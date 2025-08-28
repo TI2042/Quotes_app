@@ -1,0 +1,10 @@
+<h2>Цитата:</h2>
+{% if quote %}
+<p>{{ quote.text }}</p>
+<p><i>{{ quote.source }}</i></p>
+<p>Просмотров: {{ quote.views }}</p>
+<a href="{% url 'vote' quote.id 'like' %}">Лайк ({{ quote.likes }})</a> |
+<a href="{% url 'vote' quote.id 'dislike' %}">Дизлайк ({{ quote.dislikes }})</a>
+{% else %}
+<p>Цитат нет :(</p>
+{% endif %}

@@ -1,0 +1,6 @@
+<h2>Топ-10 цитат</h2>
+<ul>
+{% for quote in top_quotes %}
+  <li>{{ quote.text }} — {{ quote.likes }} лайков</li>
+{% endfor %}
+</ul>

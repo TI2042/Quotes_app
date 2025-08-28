@@ -1,0 +1,79 @@
+{% extends 'quotes/base.html' %}
+
+{% block content %}
+<h1>Все цитаты</h1>
+
+<form method="get" style="margin-bottom: 20px;">
+    <input type="text" name="q" placeholder="Поиск" value="{{ request.GET.q }}">
+    <button type="submit">Искать</button>
+</form>
+
+<table border="1" cellpadding="8" cellspacing="0" style="width:100%; border-collapse: collapse;">
+    <thead>
+    <tr>
+        <th>
+            <a href="?sort=text&order={% if sort == 'text' and order == 'asc' %}desc{% else %}asc{% endif %}{% if query %}&q={{ query }}{% endif %}">
+                Цитата
+            </a>
+        </th>
+        <th>
+            <a href="?sort=source&order={% if sort == 'source' and order == 'asc' %}desc{% else %}asc{% endif %}{% if query %}&q={{ query }}{% endif %}">
+                Источник
+            </a>
+        </th>
+        <th>
+            <a href="?sort=likes&order={% if sort == 'likes' and order == 'asc' %}desc{% else %}asc{% endif %}{% if query %}&q={{ query }}{% endif %}">
+                👍
+            </a>
+        </th>
+        <th>
+            <a href="?sort=dislikes&order={% if sort == 'dislikes' and order == 'asc' %}desc{% else %}asc{% endif %}{% if query %}&q={{ query }}{% endif %}">
+                👎
+            </a>
+        </th>
+        <th>
+            <a href="?sort=views&order={% if sort == 'views' and order == 'asc' %}desc{% else %}asc{% endif %}{% if query %}&q={{ query }}{% endif %}">
+                👁️
+            </a>
+        </th>
+        <th>Действия</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for quote in page_obj %}
+    <tr>
+        <td>{{ quote.text }}</td>
+        <td>{{ quote.source }}</td>
+        <td>{{ quote.likes }}</td>
+        <td>{{ quote.dislikes }}</td>
+        <td>{{ quote.views }}</td>
+        <td>
+            <a href="{% url 'edit_quote' quote.id %}">✏️</a>
+            <a href="{% url 'delete_quote' quote.id %}">🗑️</a>
+        </td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="6">Ничего не найдено</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<!-- Пагинация -->
+<div style="margin-top: 20px;">
+    <span>
+      {% if page_obj.has_previous %}
+        <a href="?page=1{% if sort %}&sort={{ sort }}{% endif %}{% if query %}&q={{ query }}{% endif %}">&laquo; Первая</a>
+        <a href="?page={{ page_obj.previous_page_number }}{% if sort %}&sort={{ sort }}{% endif %}{% if query %}&q={{ query }}{% endif %}">&lsaquo; Назад</a>
+      {% endif %}
+
+      <strong>Стр. {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</strong>
+
+      {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}{% if sort %}&sort={{ sort }}{% endif %}{% if query %}&q={{ query }}{% endif %}">Вперёд &rsaquo;</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}{% if sort %}&sort={{ sort }}{% endif %}{% if query %}&q={{ query }}{% endif %}">Последняя &raquo;</a>
+      {% endif %}
+    </span>
+</div>
+{% endblock %}

@@ -6,12 +6,12 @@
 <h2>Случайная цитата</h2>
 
 {% if quote %}
-    <p><strong>{{ quote.text }}</strong></p>
-    <p><em>Источник: {{ quote.source }}</em></p>
-    <p>Лайки: {{ quote.likes }} | Дизлайки: {{ quote.dislikes }} | Просмотров: {{ quote.views }}</p>
-    <a href="{% url 'vote' quote.id 'like' %}">Лайк ({{ quote.likes }})</a> |
-    <a href="{% url 'vote' quote.id 'dislike' %}">Дизлайк ({{ quote.dislikes }})</a>
+<p><strong>{{ quote.text }}</strong></p>
+<p><em>Источник: {{ quote.source }}</em></p>
+<p>Лайки: {{ quote.likes }} | Дизлайки: {{ quote.dislikes }} | Просмотров: {{ quote.views }}</p>
+<a href="{% url 'vote' quote.id 'like' %}">Лайк ({{ quote.likes }})</a> |
+<a href="{% url 'vote' quote.id 'dislike' %}">Дизлайк ({{ quote.dislikes }})</a>
 {% else %}
-    <p>Цитат пока нет :(</p>
+<p>Цитат пока нет :(</p>
 {% endif %}
 {% endblock %}

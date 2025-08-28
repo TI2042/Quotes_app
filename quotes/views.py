@@ -1,7 +1,11 @@
 import random
+
+from django.core.paginator import Paginator
+from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Quote
+
 from .forms import QuoteForm
+from .models import Quote
 
 
 def weighted_random_quote():
@@ -49,3 +53,50 @@ def top_quotes(request):
     return render(
         request, "quotes/top.html", {"top_quotes": quotes, "current_sort": sort_by}
     )
+
+
+def all_quotes_view(request):
+    query = request.GET.get("q")
+    sort_by = request.GET.get("sort", "id")  # сортировка по умолчанию
+    order = request.GET.get("order", "asc")
+
+    quotes = Quote.objects.all()
+
+    if query:
+        quotes = quotes.filter(Q(text__icontains=query) | Q(source__icontains=query))
+
+    if order == "desc":
+        sort_by = f"-{sort_by}"
+
+    quotes = quotes.order_by(sort_by)
+
+    paginator = Paginator(quotes, 10)  # 10 цитат на страницу
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, "quotes/all_quotes.html", {
+        "page_obj": page_obj,
+        "query": query,
+        "sort": sort_by,
+        "order": order
+    })
+
+
+def edit_quote_view(request, pk):
+    quote = get_object_or_404(Quote, pk=pk)
+    if request.method == "POST":
+        form = QuoteForm(request.POST, instance=quote)
+        if form.is_valid():
+            form.save()
+            return redirect("all_quotes")
+    else:
+        form = QuoteForm(instance=quote)
+    return render(request, "quotes/edit_quote.html", {"form": form, "quote": quote})
+
+
+def delete_quote_view(request, pk):
+    quote = get_object_or_404(Quote, pk=pk)
+    if request.method == "POST":
+        quote.delete()
+        return redirect("all_quotes")
+    return render(request, "quotes/delete_quote.html", {"quote": quote})

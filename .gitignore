@@ -1,0 +1,53 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Django stuff:
+*.log
+*.pot
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+db.sqlite3
+media/
+staticfiles/
+
+# If you use Postgres:
+*.psql
+
+# Django migrations (optional — только если не хочешь трекать их)
+# */migrations/*.py
+*/migrations/__pycache__/
+
+# VSCode / PyCharm
+.vscode/
+.idea/
+
+# Windows / system files
+Thumbs.db
+Desktop.ini
+
+# Virtual environments
+env/
+venv/
+.venv/
+
+# Environment variables
+.env
+.env.*
+
+# Git files
+*.orig
+
+# __MACOSX for zip compatibility
+__MACOSX/
+
+# Node/npm (if any frontend)
+node_modules/
+build/
+dist/

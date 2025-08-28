@@ -1,38 +1,38 @@
 {% extends 'quotes/base.html' %}
 
 {% block content %}
-  <h1>Топ фраз </h1>
+<h1>Топ фраз </h1>
 
-    <p>Фильтр:
-        <a href="?sort_by=likes">👍 По лайкам</a> |
-        <a href="?sort_by=dislikes">👎 По дизлайкам</a> |
-        <a href="?sort_by=views">👁️ По просмотрам</a>
-    </p>
+<p>Фильтр:
+    <a href="?sort_by=likes">👍 По лайкам</a> |
+    <a href="?sort_by=dislikes">👎 По дизлайкам</a> |
+    <a href="?sort_by=views">👁️ По просмотрам</a>
+</p>
 
-  {% if top_quotes %}
-    <table border="1">
-      <thead>
-      <tr>
-          <th>Фраза</th>
-          <th>Источник</th>
-          <th>Лайки</th>
-          <th>Дизлайки</th>
-          <th>Просмотры</th>
-      </tr>
-      </thead>
-      <tbody>
-        {% for quote in top_quotes %}
-          <tr>
-              <td>{{ quote.text }}</td>
-              <td>{{ quote.source }}</td>
-              <td>{{ quote.likes }}</td>
-              <td>{{ quote.dislikes }}</td>
-              <td>{{ quote.views }}</td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  {% else %}
-    <p>Нет доступных фраз.</p>
-  {% endif %}
+{% if top_quotes %}
+<table border="1">
+    <thead>
+    <tr>
+        <th>Фраза</th>
+        <th>Источник</th>
+        <th>Лайки</th>
+        <th>Дизлайки</th>
+        <th>Просмотры</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for quote in top_quotes %}
+    <tr>
+        <td>{{ quote.text }}</td>
+        <td>{{ quote.source }}</td>
+        <td>{{ quote.likes }}</td>
+        <td>{{ quote.dislikes }}</td>
+        <td>{{ quote.views }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>Нет доступных фраз.</p>
+{% endif %}
 {% endblock %}

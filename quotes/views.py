@@ -44,22 +44,22 @@ def vote(request, quote_id, action):
 
 
 def top_quotes(request):
-    filter_by = request.GET.get('filter', 'likes')  # по умолчанию сортируем по лайкам
+    filter_by = request.GET.get("filter", "likes")  # по умолчанию сортируем по лайкам
 
-    if filter_by == 'likes':
-        quotes = Quote.objects.all().order_by('-likes')[:10]
-    elif filter_by == 'dislikes':
-        quotes = Quote.objects.all().order_by('-dislikes')[:10]
-    elif filter_by == 'views':
-        quotes = Quote.objects.all().order_by('-views')[:10]
+    if filter_by == "likes":
+        quotes = Quote.objects.all().order_by("-likes")[:10]
+    elif filter_by == "dislikes":
+        quotes = Quote.objects.all().order_by("-dislikes")[:10]
+    elif filter_by == "views":
+        quotes = Quote.objects.all().order_by("-views")[:10]
     else:
-        quotes = Quote.objects.all().order_by('-likes')[:10]
+        quotes = Quote.objects.all().order_by("-likes")[:10]
 
     context = {
-        'top_quotes': quotes,
-        'filter_by': filter_by,
+        "top_quotes": quotes,
+        "filter_by": filter_by,
     }
-    return render(request, 'quotes/top.html', context)
+    return render(request, "quotes/top.html", context)
 
 
 def all_quotes_view(request):
@@ -77,7 +77,7 @@ def all_quotes_view(request):
 
     quotes = quotes.order_by(sort_by)
 
-    paginator = Paginator(quotes, 10)  # 10 цитат на страницу
+    paginator = Paginator(quotes, 10)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
@@ -97,6 +97,7 @@ def edit_quote_view(request, pk):
             return redirect("all_quotes")
     else:
         form = QuoteForm(instance=quote)
+
     return render(request, "quotes/edit_quote.html", {"form": form, "quote": quote})
 
 

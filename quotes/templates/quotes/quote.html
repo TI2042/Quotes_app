@@ -11,9 +11,16 @@
     <div class="text-sm text-gray-600 mb-4">Источник: <span class="font-medium">{{ quote.source }}</span></div>
 
 
-    <div class="flex gap-6 items-center justify-center">
-        <span class="text-green-600">👍 {{ quote.likes }}</span>
-        <span class="text-red-500">👎 {{ quote.dislikes }}</span>
+    <div class="flex gap-6 items-center justify-center" id="quote-info" data-quote-id="{{ quote.id }}">
+        <form method="post" action="{% url 'vote' quote.id 'like'%}">
+            {% csrf_token %}
+            <button type="submit" class="text-green-600 hover:underline">👍 {{ quote.likes }}</button>
+        </form>
+
+        <form method="post" action="{% url 'vote' quote.id 'dislike'%}">
+            {% csrf_token %}
+            <button type="submit" class="text-red-500 hover:underline">👎 {{ quote.dislikes }}</button>
+        </form>
         <span class="text-gray-500">👁️ {{ quote.views }}</span>
     </div>
     {% else %}

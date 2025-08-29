@@ -1,14 +1,22 @@
 {% extends 'quotes/base.html' %}
 
+
 {% block content %}
-<h1>Удалить цитату</h1>
-<p>Вы уверены, что хотите удалить цитату?</p>
+<div class="max-w-xl mx-auto bg-white p-6 rounded shadow text-center">
+    <h2 class="text-xl font-bold text-red-600 mb-4">Удалить цитату</h2>
+    <p class="mb-6">Вы уверены, что хотите удалить эту цитату?</p>
 
-<blockquote>{{ quote.text }}</blockquote>
 
-<form method="post">
-    {% csrf_token %}
-    <button type="submit">Да, удалить</button>
-    <a href="{% url 'all_quotes' %}">Отмена</a>
-</form>
+    <blockquote class="italic text-gray-700 border-l-4 border-gray-300 pl-4 mb-6">
+        {{ quote.text }}<br>
+        <span class="block text-sm text-gray-500 mt-2">Источник: {{ quote.source }}</span>
+    </blockquote>
+
+
+    <form method="post" class="flex justify-center gap-4">
+        {% csrf_token %}
+        <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">Удалить</button>
+        <a href="{% url 'all_quotes' %}" class="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400">Отмена</a>
+    </form>
+</div>
 {% endblock %}

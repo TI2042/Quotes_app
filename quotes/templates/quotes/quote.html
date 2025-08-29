@@ -1,17 +1,23 @@
 {% extends 'quotes/base.html' %}
 
-{% block title %}Случайная цитата{% endblock %}
 
 {% block content %}
-<h2>Случайная цитата</h2>
+<div class="max-w-2xl mx-auto bg-white p-6 rounded shadow">
+    <h2 class="text-xl font-bold mb-4 text-center">Случайная цитата</h2>
 
-{% if quote %}
-<p><strong>{{ quote.text }}</strong></p>
-<p><em>Источник: {{ quote.source }}</em></p>
-<p>Лайки: {{ quote.likes }} | Дизлайки: {{ quote.dislikes }} | Просмотров: {{ quote.views }}</p>
-<a href="{% url 'vote' quote.id 'like' %}">Лайк ({{ quote.likes }})</a> |
-<a href="{% url 'vote' quote.id 'dislike' %}">Дизлайк ({{ quote.dislikes }})</a>
-{% else %}
-<p>Цитат пока нет :(</p>
-{% endif %}
+
+    {% if quote %}
+    <div class="text-lg italic text-gray-800 mb-4">"{{ quote.text }}"</div>
+    <div class="text-sm text-gray-600 mb-4">Источник: <span class="font-medium">{{ quote.source }}</span></div>
+
+
+    <div class="flex gap-6 items-center justify-center">
+        <span class="text-green-600">👍 {{ quote.likes }}</span>
+        <span class="text-red-500">👎 {{ quote.dislikes }}</span>
+        <span class="text-gray-500">👁️ {{ quote.views }}</span>
+    </div>
+    {% else %}
+    <p class="text-gray-500 text-center">Цитаты пока не найдены.</p>
+    {% endif %}
+</div>
 {% endblock %}

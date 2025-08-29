@@ -23,10 +23,13 @@ def quote_view(request):
 
 
 def add_quote(request):
-    form = QuoteForm(request.POST or None)
-    if form.is_valid():
-        form.save()
-        return redirect("home")
+    if request.method == "POST":
+        form = QuoteForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("home")
+    else:
+        form = QuoteForm()
     return render(request, "quotes/add.html", {"form": form})
 
 
@@ -41,18 +44,22 @@ def vote(request, quote_id, action):
 
 
 def top_quotes(request):
-    sort_by = request.GET.get("sort_by", "likes")
+    filter_by = request.GET.get('filter', 'likes')  # по умолчанию сортируем по лайкам
 
-    if sort_by == "dislikes":
-        quotes = Quote.objects.order_by("-dislikes")[:10]
-    elif sort_by == "views":
-        quotes = Quote.objects.order_by("-views")[:10]
-    else:  # default: likes
-        quotes = Quote.objects.order_by("-likes")[:10]
+    if filter_by == 'likes':
+        quotes = Quote.objects.all().order_by('-likes')[:10]
+    elif filter_by == 'dislikes':
+        quotes = Quote.objects.all().order_by('-dislikes')[:10]
+    elif filter_by == 'views':
+        quotes = Quote.objects.all().order_by('-views')[:10]
+    else:
+        quotes = Quote.objects.all().order_by('-likes')[:10]
 
-    return render(
-        request, "quotes/top.html", {"top_quotes": quotes, "current_sort": sort_by}
-    )
+    context = {
+        'top_quotes': quotes,
+        'filter_by': filter_by,
+    }
+    return render(request, 'quotes/top.html', context)
 
 
 def all_quotes_view(request):
@@ -74,12 +81,11 @@ def all_quotes_view(request):
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
-    return render(request, "quotes/all_quotes.html", {
-        "page_obj": page_obj,
-        "query": query,
-        "sort": sort_by,
-        "order": order
-    })
+    return render(
+        request,
+        "quotes/all_quotes.html",
+        {"page_obj": page_obj, "query": query, "sort": sort_by, "order": order},
+    )
 
 
 def edit_quote_view(request, pk):

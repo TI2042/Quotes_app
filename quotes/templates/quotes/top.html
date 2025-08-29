@@ -1,38 +1,35 @@
 {% extends 'quotes/base.html' %}
 
 {% block content %}
-<h1>Топ фраз </h1>
+<h1 class="text-2xl font-bold mb-4">Топ 10 цитат</h1>
 
-<p>Фильтр:
-    <a href="?sort_by=likes">👍 По лайкам</a> |
-    <a href="?sort_by=dislikes">👎 По дизлайкам</a> |
-    <a href="?sort_by=views">👁️ По просмотрам</a>
-</p>
+<div class="mb-6">
+    <span class="mr-2 font-medium">Топ по:</span>
+    <a href="?filter=likes"
+       class="px-3 py-1 rounded {% if filter_by == 'likes' %}bg-blue-600 text-white{% else %}bg-gray-200{% endif %}">
+        👍 Лайки
+    </a>
+    <a href="?filter=dislikes"
+       class="px-3 py-1 rounded {% if filter_by == 'dislikes' %}bg-blue-600 text-white{% else %}bg-gray-200{% endif %}">
+        👎 Дизлайки
+    </a>
+    <a href="?filter=views"
+       class="px-3 py-1 rounded {% if filter_by == 'views' %}bg-blue-600 text-white{% else %}bg-gray-200{% endif %}">
+        👁️ Просмотры
+    </a>
+</div>
 
-{% if top_quotes %}
-<table border="1">
-    <thead>
-    <tr>
-        <th>Фраза</th>
-        <th>Источник</th>
-        <th>Лайки</th>
-        <th>Дизлайки</th>
-        <th>Просмотры</th>
-    </tr>
-    </thead>
-    <tbody>
+<div class="space-y-4">
     {% for quote in top_quotes %}
-    <tr>
-        <td>{{ quote.text }}</td>
-        <td>{{ quote.source }}</td>
-        <td>{{ quote.likes }}</td>
-        <td>{{ quote.dislikes }}</td>
-        <td>{{ quote.views }}</td>
-    </tr>
+    <div class="border rounded p-4 bg-white shadow">
+        <p class="text-lg mb-2">"{{ quote.text }}"</p>
+        <p class="text-sm text-gray-600">Источник: {{ quote.source }}</p>
+        <div class="text-sm text-gray-500 mt-2">
+            👍 {{ quote.likes }} | 👎 {{ quote.dislikes }} | 👁️ {{ quote.views }}
+        </div>
+    </div>
+    {% empty %}
+    <p>Нет цитат для отображения.</p>
     {% endfor %}
-    </tbody>
-</table>
-{% else %}
-<p>Нет доступных фраз.</p>
-{% endif %}
+</div>
 {% endblock %}

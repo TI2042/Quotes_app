@@ -2,28 +2,33 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Quotes App{% endblock %}</title>
-    <style>
-        nav a {
-            margin-right: 15px;
-            text-decoration: none;
-            color: darkblue;
-            font-weight: bold;
-        }
-        nav a:hover {
-            text-decoration: underline;
-        }
-    </style>
+    <title>Цитаты</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-<nav>
-    <a href="{% url 'home' %}">🏠 Главная</a>
-    <a href="{% url 'add_quote' %}">➕ Добавить цитату</a>
-    <a href="{% url 'top_quotes' %}">📚 Топ 10 цитат</a>
-    <a href="{% url 'all_quotes' %}">📋 Все цитаты</a>
-</nav>
-<hr>
-{% block content %}
-{% endblock %}
+<body class="bg-gray-100 text-gray-900 min-h-screen flex flex-col">
+
+
+<header class="bg-white shadow">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+        <h1 class="text-2xl font-semibold text-blue-600">Цитаты</h1>
+        <nav class="flex gap-4">
+            <a href="{% url 'home' %}" class="text-gray-700 hover:text-blue-600">🏠 Главная</a>
+            <a href="{% url 'add_quote' %}" class="text-gray-700 hover:text-blue-600">➕ Добавить</a>
+            <a href="{% url 'top_quotes' %}" class="text-gray-700 hover:text-blue-600">⭐ Топ</a>
+            <a href="{% url 'all_quotes' %}" class="text-gray-700 hover:text-blue-600">📚 Все</a>
+        </nav>
+    </div>
+</header>
+
+
+<main class="container mx-auto px-4 py-6 flex-1">
+    {% block content %}
+    {% endblock %}
+</main>
+
+
+<footer class="bg-white shadow text-center py-4 text-sm text-gray-500">
+    &copy; {{ year|default:"2025" }} Цитаты. Все права защищены.
+</footer>
 </body>
 </html>

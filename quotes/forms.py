@@ -13,13 +13,18 @@ class QuoteForm(forms.ModelForm):
         cleaned = super().clean()
         text = cleaned.get("text")
         source = cleaned.get("source")
+
         if text and source:
             qs = Quote.objects.filter(text=text, source=source)
             if self.instance.pk:
                 qs = qs.exclude(pk=self.instance.pk)
             if qs.exists():
                 raise ValidationError("Цитата уже существует!")
-            if source and Quote.objects.filter(source=source).count() >= 3:
-                raise forms.ValidationError("Нельзя добавить больше 3 цитат из одного источника.")
+
+            source_qs = Quote.objects.filter(source=source)
+            if self.instance.pk:
+                source_qs = source_qs.exclude(pk=self.instance.pk)
+            if source_qs.count() >= 3:
+                raise ValidationError("Нельзя добавить больше 3 цитат из одного источника.")
 
         return cleaned

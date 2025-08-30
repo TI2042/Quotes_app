@@ -2,9 +2,7 @@ import os
 
 SECRET_KEY = "your-secret-key"
 DEBUG = True
-ALLOWED_HOSTS = [
-    "ti2042.pythonanywhere.com"
-]
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'transaction-nuts-cliff-enlarge.trycloudflare.com']
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",

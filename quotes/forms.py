@@ -19,5 +19,7 @@ class QuoteForm(forms.ModelForm):
                 qs = qs.exclude(pk=self.instance.pk)
             if qs.exists():
                 raise ValidationError("Цитата уже существует!")
+            if source and Quote.objects.filter(source=source).count() >= 3:
+                raise forms.ValidationError("Нельзя добавить больше 3 цитат из одного источника.")
 
         return cleaned

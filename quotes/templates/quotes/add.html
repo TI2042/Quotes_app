@@ -4,6 +4,13 @@
 <div class="max-w-xl mx-auto bg-white p-6 rounded shadow">
     <h2 class="text-xl font-bold mb-4">Добавить цитату</h2>
 
+    {% if form.non_field_errors %}
+    <div class="mb-4 text-red-600 text-sm">
+        {% for error in form.non_field_errors %}
+        <p>{{ error }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
     <form method="post">
         {% csrf_token %}
 
